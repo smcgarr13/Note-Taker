@@ -25,30 +25,68 @@ app.get('/', (req, res) => {
 
 // Route for getting saved notes
 app.get('./api/notes', (req, res) => {
-    fs.readFile(path.join(__dirname, 'db.jason'), 'utf8', (err, data) => {
-if (err) throw err;
-const notes = JSON.parse(data);
+   const notesData = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
+const notes = JSON.parse(notesData);
 res.json(notes);
     });
-});
+// app.get('./api/notes', (req, res) => {
+//     fs.readFile(path.join(__dirname, 'db.jason'), 'utf8', (err, data) => {
+// if (err) throw err;
+// const notes = JSON.parse(data);
+// res.json(notes);
+//     });
+// });
 
 //Route for adding new notes
 app.post('api/notes', (req, res) => {
-    fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {
-        if (err) throw err;
-        const notes = JSON.parse(data);
+    const notesData = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
+        const notes = JSON.parse(notesData);
         const newNote = req.body;
         // Generate unique name/ID for new note
         newNote.id = uuid();
         // Add new note to array of notes
         notes.push(newNote);
         // write notes array to db.json file
-        fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), (err => {
+        fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), err => {
             if (err) throw err;
             // return new note to client
             res.json(newNote);
-        }));
+        });
     });
+
+// app.post('api/notes', (req, res) => {
+//     fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {
+//         if (err) throw err;
+//         const notes = JSON.parse(data);
+//         const newNote = req.body;
+//         // Generate unique name/ID for new note
+//         newNote.id = uuid();
+//         // Add new note to array of notes
+//         notes.push(newNote);
+//         // write notes array to db.json file
+//         fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), err => {
+//             if (err) throw err;
+//             // return new note to client
+//             res.json(newNote);
+//         });
+//     });
+// });
+
+// add delete function
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    const notesData = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
+    const notes = JSON.parse(notesData);
+    const index = notes.findIndex(note => note.id === id);
+    if (index !== -1) {
+        notes.splice(index, 1);
+        fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), err => {
+            if (err) throw err;
+        });
+        res.status(204).send();
+    } else {
+        res.status(404).send();
+    }
 });
 
 app.listen(PORT, () =>
