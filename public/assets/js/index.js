@@ -1,8 +1,11 @@
+
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
+let noteDisplay;
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
@@ -10,6 +13,25 @@ if (window.location.pathname === '/notes') {
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
+
+  noteDisplay = document.querySelector('.display-note');
+  showNotes();
+
+  // event listeners
+  saveNoteBtn.addEventListener('click', handleNoteSave);
+
+  newNoteBtn.addEventListener('click', () => {
+    activeNote = {};
+    renderActiveNote();
+  });
+
+  // newNoteBtn.addEventListener('click', () => {
+  //   noteTitle.value = '';
+  //   noteText.value = '';
+  //   noteDisplay.style.display = 'flex';
+  // });
+
+
 }
 
 // Show an element
@@ -20,6 +42,21 @@ const show = (elem) => {
 // Hide an element
 const hide = (elem) => {
   elem.style.display = 'none';
+};
+
+// display notes
+const displayNotes = () => {
+  getNotes().then(renderNoteList);
+};
+
+const showNotes = () => {
+  // display existing notes
+  displayNotes();
+   // display empty fields for new notes
+ noteTitle.value = '';
+ noteText.value = '';
+ noteDisplay.style.display = 'flex';
+//  show(noteDisplay);
 };
 
 // activeNote is used to keep track of the note in the textarea
@@ -72,7 +109,7 @@ const handleNoteSave = () => {
     text: noteText.value,
   };
   saveNote(newNote).then(() => {
-    getAndRenderNotes();
+    displayNotes();
     renderActiveNote();
   });
 };
