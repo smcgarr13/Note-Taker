@@ -12,21 +12,19 @@ app.use(express.json());
 // Middleware for parsing request
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(express.static('public'));
-
 // Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/notes.html'))
 });
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'))
 });
 
 // Route for getting saved notes
 app.get('./api/notes', (req, res) => {
    const notesData = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
-const notes = JSON.parse(notesData);
+   const notes = JSON.parse(notesData);
 res.json(notes);
     });
 // app.get('./api/notes', (req, res) => {
@@ -40,19 +38,19 @@ res.json(notes);
 //Route for adding new notes
 app.post('api/notes', (req, res) => {
     const notesData = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
-        const notes = JSON.parse(notesData);
-        const newNote = req.body;
-        // Generate unique name/ID for new note
-        newNote.id = uuid();
-        // Add new note to array of notes
-        notes.push(newNote);
-        // write notes array to db.json file
-        fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), err => {
-            if (err) throw err;
-            // return new note to client
-            res.json(newNote);
-        });
+    const notes = JSON.parse(notesData);
+    const newNote = req.body;
+    // Generate unique name/ID for new note
+    newNote.id = uuid();
+    // Add new note to array of notes
+    notes.push(newNote);
+    // write notes array to db.json file
+    fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(notes), err => {
+    if (err) throw err;
+    // return new note to client
+    res.json(newNote);
     });
+});
 
 // app.post('api/notes', (req, res) => {
 //     fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {
@@ -88,6 +86,8 @@ app.delete('/api/notes/:id', (req, res) => {
         res.status(404).send();
     }
 });
+
+app.use(express.static('public'));
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🫶`)
