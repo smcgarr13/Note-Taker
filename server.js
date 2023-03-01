@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', htmlRouter);
 // app.use('/notes', htmlRouter);
-app.use('/notes', notesRouter);
-app.use('/api/notes', notesRouter);
+app.use('/api', notesRouter);
+// app.use('/api/notes', notesRouter);
 // app.use('/', notesRouter);
 
 app.use(express.static('public'));
