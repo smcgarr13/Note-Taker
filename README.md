@@ -1,5 +1,5 @@
 # Note Taker
-A note taking application that can organize and keep track of tasks that need to be completed
+A note taking application
 
 ## Description
 This code was created to provide an application that can organize and keep track of tasks that need to be completed
@@ -8,7 +8,7 @@ This code was created to provide an application that can organize and keep track
 N/A
 
 ## Usage
-When you click the "get started" button on the landing page, you will be presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column.  Once you enter a note title and note text, the save icon will appear at the top right corner of the page.  If you decide to save your note, simply click on the save icon and your file will be saved in the left-hand column with the other existing notes.  Once saved, you can click on any of the saved notes and that note will appear in the right-hand column.  If you'd like to add an additional note, simply click the "+" icon and youo will be presented with empty fields to enter a new note title and the note’s text in the right-hand column.  You can also delete your saved noted by clicking on the "trash" icon.
+When you click the "get started" button on the landing page, you will be presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column.  Once you enter a note title and note text, the save icon will appear at the top right corner of the page.  If you decide to save your note, simply click on the save icon and your file will be saved in the left-hand column with the other existing notes.  Once saved, you can click on any of the saved notes and that note will appear in the right-hand column.  If you'd like to add an additional note, simply click the "+" icon at the upper right hand corner of the page and you will be presented with empty fields to enter a new note title and the note’s text in the right-hand column.  You can also delete your saved notes by clicking on the "trash" icon.
 
 ## Credits
 N/A
